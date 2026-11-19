@@ -1,0 +1,107 @@
+/* Load after liquid-glass.css. SVG credits travel with the HTML fragment. */
+.social-links.brand-social {
+  gap: 12px;
+}
+
+.social-links.brand-social > a {
+  min-height: 54px;
+  padding: 6px 14px 6px 6px;
+  gap: 10px;
+  border-radius: 30px;
+  border: 1px solid #fff7f080;
+  color: #fff8ed;
+  background: linear-gradient(140deg, #ffffff24, #ffffff0c 65%, #f2bfd51c);
+  box-shadow: inset 0 1px 1px #ffffff80, inset 0 -1px 1px #3010243b,
+    0 3px 0 #35182c38, 0 8px 16px #2d102326;
+  transition: transform .22s ease, background .22s ease, box-shadow .22s ease;
+}
+
+.brand-social .social-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  border: 1px solid #ffffff6b;
+  background: linear-gradient(145deg, #f0f4ce, #bacb91);
+  box-shadow: inset 0 2px 2px #ffffff8f, inset 0 -3px 4px #0000001f,
+    0 3px 0 #2a13282b, 0 5px 9px #25102030;
+}
+
+.brand-social .social-icon svg {
+  display: block;
+  width: 21px;
+  height: 21px;
+  fill: currentColor;
+}
+
+.social-links.brand-social > a > .social-label {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.brand-social .social-instagram .social-icon {
+  background: radial-gradient(circle at 27% 105%, #ffd56b, #f76538 35%, #d82d81 64%, #7440b8 100%);
+}
+
+.brand-social .social-google .social-icon {
+  background: linear-gradient(145deg, #669df6, #3474d4);
+}
+
+.brand-social .social-whatsapp .social-icon {
+  background: linear-gradient(145deg, #36d877, #128c55);
+}
+
+.brand-social .social-facebook .social-icon {
+  background: linear-gradient(145deg, #ffffff, #edf3ff);
+  color: #0866ff;
+}
+
+.brand-social .social-facebook svg {
+  width: 25px;
+  height: 25px;
+}
+
+.brand-social .social-phone .social-icon {
+  color: #50653d;
+}
+
+.brand-social .social-phone svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.social-links.brand-social > a:focus-visible {
+  outline: 3px solid #fff7cf;
+  outline-offset: 5px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .social-links.brand-social > a:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(140deg, #ffffff38, #ffffff16);
+    box-shadow: inset 0 1px 2px #ffffffa6, 0 4px 0 #35182c38, 0 12px 20px #2d10233b;
+  }
+}
+
+@media (max-width: 760px) {
+  .social-links.brand-social { gap: 10px; }
+  .social-links.brand-social > a { padding-right: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-links.brand-social > a,
+  .social-links.brand-social > a:hover { transition: none; transform: none; }
+}
+
+@media (forced-colors: active) {
+  .social-links.brand-social .social-icon { border-color: LinkText; color: LinkText; }
+  .social-links.brand-social > a:focus-visible { outline-color: Highlight; }
+}

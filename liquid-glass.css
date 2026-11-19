@@ -1,0 +1,587 @@
+/*
+ * Liquid-glass finish for the Little Joys / Atelier direction.
+ * Load after style.css and refinement.css. No layout or scene overrides.
+ * Review-banner styling is intentionally owned by its separate stylesheet.
+ */
+
+:root {
+  --glass-rim: rgba(255, 255, 250, .91);
+  --glass-rose: rgba(241, 192, 211, .34);
+  --glass-pistachio: rgba(220, 233, 182, .36);
+  --glass-ink-shadow: rgba(109, 49, 77, .12);
+  --glass-focus: #8c3c59;
+}
+
+/* The colour fields create depth without moving blur layers or extra canvases. */
+.hero {
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 65% 27%, #fffaf4cc 0, #fff7f000 45%),
+    radial-gradient(ellipse at 2% 98%, #e0e9b78a 0, #e0e9b700 37%),
+    radial-gradient(ellipse at 98% 84%, #d8cbe34a 0, #d8cbe300 31%),
+    linear-gradient(125deg, #f6d1de 0%, #fae4e6 48%, #edc7d7 100%);
+}
+
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border: 1px solid #ffffff91;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 21%, #fffdf0a6 0, #fffdf008 31%, #f5b9cf0d 61%, #e4afc53d 100%);
+  box-shadow:
+    inset 3px 4px 10px #ffffff86,
+    inset -8px -10px 18px #c783a21a,
+    12px 20px 30px #ab76910c;
+}
+
+.hero::before {
+  width: 178px;
+  height: 178px;
+  top: 25%;
+  left: -92px;
+}
+
+.hero::after {
+  width: 110px;
+  height: 110px;
+  right: 3%;
+  bottom: 6%;
+  background:
+    radial-gradient(circle at 28% 22%, #ffffffa3 0, #f8ffdf12 35%, #dce7b32b 78%, #d3dfac52 100%);
+}
+
+.hero-word {
+  color: #aa647c0e;
+  text-shadow: 0 1px 0 #ffffff1a;
+}
+
+.halo {
+  border-color: #fffcf3a8;
+  background: radial-gradient(ellipse at 33% 20%, #ffffff0c, #ffffff00 62%);
+  box-shadow:
+    inset 0 1px 2px #ffffffa1,
+    inset 0 -1px 2px #a7637e12,
+    0 0 0 21px #ffffff08,
+    0 0 0 45px #ffffff08;
+  pointer-events: none;
+}
+
+/* Small glass components: the rim remains crisp while the interior is soft. */
+header.glass,
+.animation-controls.glass,
+.theatre-bottom .product-view.glass,
+.reassemble.glass {
+  background:
+    linear-gradient(130deg, #fffff6b5 0%, #fff8f46b 39%, #fff5f17d 67%, #ffffffb3 100%);
+  border: 1px solid var(--glass-rim);
+  box-shadow:
+    inset 0 2px 1px #ffffffea,
+    inset 0 -2px 3px #a96d8712,
+    inset 1px 0 1px #ffffffd1,
+    inset -1px 0 1px #ffffff6b,
+    0 8px 24px var(--glass-ink-shadow),
+    0 1px 3px #87465d0f;
+  -webkit-backdrop-filter: blur(18px) saturate(155%);
+  backdrop-filter: blur(18px) saturate(155%);
+}
+
+header.glass {
+  background:
+    linear-gradient(105deg, #fffdf7bd, #fff8f26e 48%, #fffdf4b0);
+  box-shadow:
+    inset 0 2px 2px #fffffff2,
+    inset 0 -1px 2px #9b60751c,
+    0 10px 28px #8f4c6714,
+    0 2px 5px #87465d0a;
+}
+
+header .brand img {
+  box-shadow: 0 2px 7px #91485e13, inset 0 1px 0 #fff;
+  outline: 1px solid #ffffffb8;
+  outline-offset: 3px;
+}
+
+header nav a {
+  border-radius: 18px;
+  text-shadow: 0 1px 0 #ffffff69;
+  transition: color .25s ease, text-shadow .25s ease;
+}
+
+header nav a:hover {
+  color: #963e60;
+  text-shadow: 0 1px 0 #ffffffb8, 0 0 14px #ffffffbd;
+}
+
+/* Opaque berry beneath the highlight keeps primary actions easy to read. */
+.hero .pill.dark,
+header .pill.dark,
+.made-section .pill.dark,
+.reveal-detail .pill.dark,
+.closing .pill.dark,
+dialog .pill.dark {
+  color: #fff9f0;
+  background:
+    linear-gradient(175deg, #ffffff29 0, #ffffff05 41%, #2b092819 100%),
+    linear-gradient(115deg, #843a56, #70314b);
+  border: 1px solid #8e4b65;
+  box-shadow:
+    inset 0 1px 1px #fff6e973,
+    inset 0 -2px 3px #37122838,
+    0 6px 14px #78345024,
+    0 1px 2px #7b3e4c1f;
+}
+
+.hero .pill.dark:hover,
+header .pill.dark:hover,
+.made-section .pill.dark:hover,
+.reveal-detail .pill.dark:hover,
+.closing .pill.dark:hover,
+dialog .pill.dark:hover {
+  box-shadow:
+    inset 0 2px 2px #fff6e985,
+    inset 0 -2px 3px #37122838,
+    0 10px 24px #7834502e;
+}
+
+.hero .pill.dark > span,
+header .pill.dark > span {
+  background: linear-gradient(150deg, #fff6ed36, #fff6ed0d);
+  box-shadow: inset 0 1px 0 #ffffff4d, 0 1px 4px #3e10281a;
+}
+
+.animation-controls button,
+.theatre-bottom .product-view button {
+  border-radius: 30px;
+  transition: background .25s ease, box-shadow .25s ease;
+}
+
+.animation-controls button:hover,
+.theatre-bottom .product-view button:hover {
+  background: #fffcf47a;
+  box-shadow: inset 0 1px 1px #ffffffe0, 0 2px 6px #985a6e0d;
+}
+
+.animation-controls button[aria-pressed="true"],
+.theatre-bottom .product-view button[aria-pressed="true"] {
+  background: #f0d4df80;
+  box-shadow: inset 1px 2px 4px #aa6f821c, inset -1px -1px 2px #ffffffe0;
+}
+
+.animation-controls button:disabled,
+.theatre-bottom .product-view button:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
+/* Soft tabs sit in a translucent, recessed tray. */
+.menu-tabs.soft {
+  background:
+    linear-gradient(140deg, #fffdf1ab, #f4e4e0b5 51%, #f5f2dfb5);
+  border: 1px solid #fffdf2db;
+  box-shadow:
+    inset 3px 3px 7px #a7787a12,
+    inset -3px -3px 7px #ffffffb0,
+    8px 10px 22px #a47c6b19,
+    -6px -6px 18px #ffffffad;
+  -webkit-backdrop-filter: blur(12px) saturate(135%);
+  backdrop-filter: blur(12px) saturate(135%);
+}
+
+.menu-tabs button {
+  transition: background .3s ease, box-shadow .3s ease, color .3s ease;
+}
+
+.menu-tabs button:hover {
+  background: #fffaf16b;
+}
+
+.menu-tabs button[aria-pressed="true"] {
+  color: #7d3450;
+  background:
+    linear-gradient(150deg, #ffffffeb, #fff6ebc4 60%, #f6e2eaa3);
+  box-shadow:
+    inset 0 2px 2px #ffffff,
+    inset 0 -1px 2px #b06f861a,
+    0 4px 9px #9d6a7926,
+    0 1px 1px #ffffffd9;
+}
+
+/* Only the rim overlays the theatre. The models and product panels stay clear. */
+.product-theatre {
+  border: 1px solid #fffcf2d9;
+  box-shadow:
+    0 16px 40px #8c48661c,
+    0 3px 8px #9a647813,
+    inset 0 2px 2px #ffffffde,
+    inset 0 -2px 5px #a45d7f17;
+}
+
+.product-theatre::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 3px 2px #ffffffbf,
+    inset 2px 0 2px #ffffff6e,
+    inset -1px 0 2px #ffffff9e,
+    inset 0 -3px 6px #874d671c;
+}
+
+.centre-panel {
+  background:
+    linear-gradient(145deg, #ffffff22, #ffffff00 45%, #fff7e71f),
+    var(--active);
+  box-shadow: inset 1px 0 0 #ffffff1f, inset -1px 0 0 #ffffff26;
+}
+
+.side-product b,
+.reveal-cake,
+.reassemble.glass {
+  border: 1px solid #ffffffb5;
+  background:
+    linear-gradient(140deg, #ffffef9e, #e7edc485 56%, #e9efc9c4);
+  color: #67344b;
+  box-shadow:
+    inset 0 2px 2px #ffffffc9,
+    inset 0 -2px 3px #758b4420,
+    0 6px 12px #7c516221;
+}
+
+.side-product b {
+  background: linear-gradient(145deg, #fff8edc2, #fff8ed42);
+}
+
+.reveal-cake {
+  border-radius: 30px;
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  backdrop-filter: blur(10px) saturate(130%);
+}
+
+.reveal-cake:hover {
+  box-shadow:
+    inset 0 2px 2px #fffffff2,
+    inset 0 -2px 3px #758b4420,
+    0 10px 20px #7c51622e;
+}
+
+/* Frosted vellum, retaining the paper edge and receipt typography. */
+.hero-receipt,
+.product-receipt {
+  color: #633446;
+  background:
+    repeating-linear-gradient(0deg, #8b674600 0 3px, #8b674604 3px 4px),
+    linear-gradient(125deg, #fffef3ed, #fff9e7e3 65%, #fff6e1ee);
+  border: 1px solid #ffffffc7;
+  border-bottom-color: transparent;
+  box-shadow: inset 0 2px 2px #ffffffdb, inset -1px 0 1px #ffffffb8;
+  -webkit-backdrop-filter: blur(8px) saturate(110%);
+  backdrop-filter: blur(8px) saturate(110%);
+}
+
+.hero-receipt .tear-line,
+.product-receipt .tear-line {
+  border-color: #9463784d;
+}
+
+.detail-stamp {
+  background: radial-gradient(circle at 30% 20%, #ffffff91, #fff9ec21 70%);
+  box-shadow: inset 0 1px 2px #ffffffa6, 0 3px 10px #8950630d;
+}
+
+/* The still photographs remain opaque; the frames supply the glass material. */
+.made-section {
+  background:
+    radial-gradient(ellipse at 16% 65%, #e3eac082, transparent 48%),
+    linear-gradient(120deg, #f6e9e4, #f2dfe5 75%, #f9ebeb);
+}
+
+.photo-stack img {
+  border-color: #fffaf0db;
+  box-shadow:
+    0 18px 30px #82445d24,
+    0 2px 4px #8e52651c,
+    0 0 0 1px #ffffffd1;
+}
+
+.seal {
+  background:
+    radial-gradient(circle at 32% 22%, #ffffef9c, transparent 53%),
+    linear-gradient(135deg, #e6edc2, #cddda2);
+  border: 1px solid #ffffefa6;
+  box-shadow:
+    inset 0 2px 3px #ffffffd1,
+    inset 0 -4px 5px #7c914b1c,
+    0 8px 16px #7a8a4d24;
+}
+
+.diaries {
+  background:
+    radial-gradient(ellipse at 95% 22%, #f3d5df42, transparent 42%),
+    radial-gradient(ellipse at 7% 74%, #e8edc93d, transparent 44%);
+}
+
+.diary-card {
+  border: 1px solid #ffffffdf;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #fffdf4d9, #fff9edbd 65%, #fae8efb3);
+  box-shadow:
+    inset 0 2px 2px #fffffff2,
+    inset 0 -1px 2px #c49aa513,
+    7px 12px 23px #92546a17,
+    0 1px 3px #88516310;
+}
+
+.diary-card img {
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px #ffffffc9, 0 2px 6px #71334b15;
+}
+
+#archive-toggle.soft,
+#load-more.soft,
+dialog .pill.soft {
+  border: 1px solid #ffffffd9;
+  background: linear-gradient(140deg, #fffdf4ed, #f4e5e6b8 64%, #f5eaddbd);
+  box-shadow:
+    inset 0 2px 2px #fffffff2,
+    inset 0 -1px 2px #a2657c14,
+    5px 7px 15px #9b727a21,
+    -4px -4px 12px #ffffffb5;
+}
+
+#archive-grid button {
+  border: 3px solid #fffcf0db;
+  box-shadow: 0 2px 8px #7c455a14, 0 0 0 1px #ffffffbf;
+  background: #f7e8e8;
+}
+
+.film-card.glass {
+  border: 1px solid #ffffffd9;
+  background:
+    radial-gradient(ellipse at 86% 28%, #ffffff7a, transparent 70%),
+    linear-gradient(125deg, #f4dce4c7, #f1e9d7b5);
+  box-shadow:
+    inset 0 2px 2px #fffffff0,
+    inset 0 -2px 3px #a9718112,
+    0 14px 30px #84536614;
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+  backdrop-filter: blur(14px) saturate(125%);
+}
+
+.film-card > div {
+  background: linear-gradient(145deg, #ffffff18, #ffffff00 65%);
+}
+
+/* Dialog translucency stays mild enough that the inputs remain legible. */
+dialog {
+  color: #642c40;
+  border: 1px solid #ffffffeb;
+  background:
+    radial-gradient(ellipse at 100% 0, #f6dce4b3, transparent 52%),
+    linear-gradient(135deg, #fffdf4f2, #fff7eef2 60%, #f5f0dcf0);
+  box-shadow:
+    inset 0 2px 2px #ffffff,
+    inset 0 -2px 4px #c490a21a,
+    0 25px 75px #52223b40,
+    0 4px 15px #52223b1c;
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  backdrop-filter: blur(20px) saturate(135%);
+}
+
+dialog::backdrop {
+  background: #42213970;
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+}
+
+dialog .close {
+  color: #71334b;
+  border: 1px solid #ffffffe6;
+  background: linear-gradient(145deg, #fffcf3d6, #f0dbe3c9);
+  box-shadow: inset 0 2px 2px #ffffff, 0 3px 8px #9a647321;
+}
+
+dialog input:not([type="range"]),
+dialog textarea,
+dialog select {
+  color: #642c40;
+  border: 1px solid #b8869b4d;
+  background: linear-gradient(125deg, #fffaf3e8, #fffdf7f2);
+  box-shadow:
+    inset 2px 3px 5px #9a6a7b0c,
+    inset -2px -2px 4px #ffffffd9,
+    0 1px 0 #ffffffd9;
+}
+
+dialog input:not([type="range"]):focus,
+dialog textarea:focus,
+dialog select:focus {
+  border-color: #a15a77;
+  outline-color: var(--glass-focus);
+  box-shadow: inset 1px 2px 3px #9a6a7b0c, 0 0 0 3px #a15a7714;
+}
+
+dialog input::placeholder,
+dialog textarea::placeholder {
+  color: #8e6879;
+  opacity: 1;
+}
+
+#brief-text {
+  border: 1px solid #ffffffc9;
+  background: linear-gradient(135deg, #f0e0e6b8, #f5eedbc9);
+  box-shadow: inset 1px 2px 4px #9c687519, 0 1px 0 #ffffffd9;
+}
+
+/* End with clear, light-refracting colour rather than a flat pink block. */
+.closing {
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 76% 15%, #fff8efb3, transparent 51%),
+    radial-gradient(ellipse at 7% 88%, #e5edba8a, transparent 43%),
+    linear-gradient(120deg, #f3cdda, #f8e0e8 55%, #ebc7d6);
+  border-top: 1px solid #ffffffc9;
+  border-bottom: 1px solid #ffffff80;
+  box-shadow: inset 0 2px 2px #ffffff69;
+}
+
+.closing::before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  left: 5%;
+  top: 14%;
+  z-index: -1;
+  border-radius: 50%;
+  border: 1px solid #ffffff78;
+  background: radial-gradient(circle at 27% 19%, #ffffff70, #ffffff05 50%, #e8c2d63d);
+  box-shadow: inset 3px 3px 8px #ffffff69, inset -4px -6px 12px #ac6b8a0d;
+  pointer-events: none;
+}
+
+footer {
+  background:
+    radial-gradient(ellipse at 8% 0, #b7688a23, transparent 55%),
+    linear-gradient(120deg, #6b314c, #5b2b42);
+  border-top: 1px solid #a6668340;
+}
+
+.social-links > a {
+  color: #fff8ed;
+  border: 1px solid #ffedf35c;
+  background: linear-gradient(130deg, #ffffff1f, #ffffff09 58%, #f6dce411);
+  box-shadow:
+    inset 0 1px 1px #fffbf24f,
+    inset 0 -1px 2px #2f102b1a,
+    0 3px 8px #2f102b1a;
+  transition: background .25s ease, box-shadow .25s ease;
+}
+
+.social-links > a:hover {
+  background: linear-gradient(130deg, #ffffff2e, #ffffff16);
+  box-shadow: inset 0 1px 2px #ffffff75, 0 4px 12px #2f102b21;
+}
+
+/* No blur support: opaque pearl surfaces keep content and controls legible. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  header.glass,
+  .animation-controls.glass,
+  .theatre-bottom .product-view.glass,
+  .reassemble.glass {
+    background: linear-gradient(135deg, #fffaf0, #f5e6e9);
+  }
+
+  .menu-tabs.soft {
+    background: linear-gradient(135deg, #faf0e7, #f1e2e5);
+  }
+
+  .hero-receipt,
+  .product-receipt {
+    background: linear-gradient(125deg, #fffdf1, #fff6e4);
+  }
+
+  dialog {
+    background: linear-gradient(135deg, #fffaf0, #f9edf0);
+  }
+
+  .film-card.glass {
+    background: linear-gradient(125deg, #f2dce4, #f3eadc);
+  }
+}
+
+@media (max-width: 760px) {
+  header.glass,
+  .animation-controls.glass,
+  .theatre-bottom .product-view.glass {
+    -webkit-backdrop-filter: blur(12px) saturate(135%);
+    backdrop-filter: blur(12px) saturate(135%);
+  }
+
+  header.glass {
+    background: linear-gradient(115deg, #fffaf2c9, #fff6f09e);
+    box-shadow: inset 0 2px 2px #fffffff2, 0 7px 19px #8f4c6717;
+  }
+
+  .hero::before {
+    width: 100px;
+    height: 100px;
+    top: 25%;
+    left: -67px;
+  }
+
+  .hero::after {
+    width: 72px;
+    height: 72px;
+    right: -38px;
+    bottom: 14%;
+  }
+
+  .product-theatre {
+    box-shadow: 0 12px 27px #8c486619, inset 0 2px 2px #ffffffde;
+  }
+
+  .product-receipt {
+    background: linear-gradient(125deg, #fffdf1f5, #fff7e8f0);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .film-card.glass {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  dialog {
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+
+  dialog::backdrop {
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+  }
+
+  .closing::before {
+    width: 90px;
+    height: 90px;
+    left: -43px;
+    top: 22%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  header nav a,
+  .animation-controls button,
+  .theatre-bottom .product-view button,
+  .menu-tabs button,
+  .social-links > a {
+    transition: none;
+  }
+}

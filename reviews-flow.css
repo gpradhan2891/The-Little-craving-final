@@ -1,0 +1,144 @@
+/* An uninterrupted ribbon of real customer voices, on frosted glass. */
+.google-banner.review-ribbon {
+  display: block;
+  padding: 80px 0 34px;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 8% 15%, #fff8e9dd, transparent 43%),
+    radial-gradient(ellipse at 88% 85%, #c3d7b9aa, transparent 42%),
+    linear-gradient(115deg, #e6edcc, #f0f1dc 52%, #dee8c8);
+  border-block: 1px solid #fff9;
+}
+.review-ribbon::before {
+  content: '';
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border: 1px solid #fffc;
+  border-radius: 50%;
+  background: radial-gradient(circle at 28% 20%, #fff9, #ffffff08 50%, #c9a8bd1c 70%);
+  box-shadow: inset -10px -14px 32px #b9ce9d20, inset 3px 4px 5px #fffc;
+  right: 7%;
+  top: -220px;
+  z-index: -1;
+  pointer-events: none;
+}
+.reviews-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 0 5% 34px;
+}
+.reviews-heading h2 { font-size: clamp(40px, 5vw, 68px); margin-top: 14px; }
+.reviews-heading h2 em { color: #67704a; }
+.review-ribbon .rating-link {
+  display: grid;
+  grid-template-columns: 50px auto;
+  gap: 3px 17px;
+  flex-shrink: 0;
+  padding: 22px 28px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #ffffffc2, #fff9ed45 55%, #fffffff0);
+  border: 1px solid #ffffffe6;
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+  box-shadow: inset 1px 2px 1px #fff, inset -1px -2px 2px #a9bb8a20, 0 12px 35px #59704212;
+}
+.review-ribbon .rating-google {
+  grid-row: 1 / 3;
+  align-self: center;
+  font: 800 43px var(--sans);
+  color: #547c70;
+}
+.review-ribbon .rating-link strong { font-size: 30px; letter-spacing: -.05em; }
+.rating-stars { font-size: 13px; letter-spacing: 1px; color: #956837; vertical-align: middle; margin-left: 7px; }
+.review-ribbon .rating-link small { font-size: 10px; padding: 0; }
+.review-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 14px 5% 30px;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+}
+.review-viewport::-webkit-scrollbar { display: none; }
+.review-viewport:focus-visible { outline: 2px solid #778951; outline-offset: -10px; }
+.review-track, .review-group { display: flex; width: max-content; align-items: stretch; }
+.review-group { gap: 20px; padding-right: 20px; }
+.flow-review {
+  width: 340px;
+  min-height: 275px;
+  margin: 0;
+  padding: 26px;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffffa6, #fffdf35c 48%, #f7ffee90);
+  border: 1px solid #ffffffe6;
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  backdrop-filter: blur(18px) saturate(135%);
+  box-shadow: inset 1px 2px 2px #fff, inset -1px -2px 2px #88977016, 0 14px 24px #5e744416;
+  transition: background .35s, box-shadow .35s;
+}
+.flow-review:nth-child(3n+2) { background: linear-gradient(135deg, #fff9f3c2, #f5e2e663 60%, #fff9edab); }
+.flow-review:nth-child(3n) { background: linear-gradient(135deg, #ffffffb8, #e6e5f45c 60%, #fffbef96); }
+.flow-review::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 44%;
+  border-radius: inherit;
+  background: linear-gradient(170deg, #ffffff50, #ffffff00 65%);
+  pointer-events: none;
+}
+.flow-review:hover { box-shadow: inset 1px 2px 2px #fff, 0 17px 30px #5e744425; }
+.flow-review-top { display: flex; justify-content: space-between; align-items: center; font-size: 8px; letter-spacing: .11em; opacity: .66; }
+.flow-review blockquote { font: italic 24px/1.3 var(--serif); letter-spacing: -.025em; margin: 24px 0 28px; }
+.flow-review figcaption { display: flex; align-items: center; gap: 12px; margin-top: auto; position: relative; }
+.review-avatar { width: 39px; height: 39px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; font-size: 10px; background: #fff8; border: 1px solid #fffd; box-shadow: inset 0 1px 2px #fff, 0 3px 8px #78915610; }
+.review-author { display: grid; gap: 5px; }
+.review-author b { font-size: 11px; font-weight: 700; }
+.review-author small { font-size: 8px; opacity: .65; }
+.review-original { margin-left: auto; width: 33px; height: 33px; display: grid; place-items: center; border-radius: 50%; border: 1px solid #69724d30; font-size: 16px; background: #ffffff50; }
+.review-original:hover { background: #fff; }
+.reviews-foot { display: flex; justify-content: space-between; gap: 25px; align-items: center; padding: 0 5%; }
+.reviews-foot>p { font-size: 9px; line-height: 1.8; color: #65704e; }
+.reviews-controls { display: flex; gap: 8px; flex-shrink: 0; }
+.reviews-controls button {
+  min-width: 40px; height: 40px; border-radius: 30px; padding: 0 13px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  font-size: 10px; color: #58633f; border: 1px solid #fffd;
+  background: linear-gradient(145deg, #ffffffb0, #ffffff30);
+  box-shadow: inset 0 1px 1px #fff, 0 5px 13px #65734913;
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.reviews-controls button:hover { background: #fff9; }
+.reviews-controls #review-flow-toggle { min-width: 116px; }
+@media (max-width: 760px) {
+  .google-banner.review-ribbon { padding: 55px 0 28px; }
+  .reviews-heading { flex-wrap: wrap; gap: 23px; margin-inline: 6%; margin-bottom: 22px; }
+  .reviews-heading h2 { font-size: 44px; }
+  .review-ribbon .rating-link { padding: 15px 21px; border-radius: 23px; gap: 2px 15px; }
+  .review-ribbon .rating-link strong { font-size: 26px; }
+  .review-ribbon .rating-google { font-size: 35px; }
+  .rating-stars { font-size: 11px; }
+  .review-viewport { padding-inline: 6%; padding-bottom: 25px; }
+  .flow-review { width: min(300px, 80vw); min-height: 280px; padding: 23px; border-radius: 25px; }
+  .flow-review blockquote { font-size: 23px; }
+  .reviews-foot { flex-direction: column-reverse; align-items: flex-start; gap: 18px; padding-inline: 6%; }
+  .reviews-foot>p { font-size: 8px; }
+  .reviews-controls button { height: 44px; min-width: 44px; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .flow-review { background: #f9f9eefd; }
+  .flow-review:nth-child(3n+2) { background: #fbefeffd; }
+  .flow-review:nth-child(3n) { background: #f2f1f8fd; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-review { transition: none; }
+  .review-viewport { scroll-behavior: auto; }
+}

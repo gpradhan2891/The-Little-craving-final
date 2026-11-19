@@ -1,0 +1,39 @@
+/* The brand's exact tagline, repeated at the main brand touchpoints. */
+.hero-copy > p.hero-tagline {
+  font: italic 20px/1.45 var(--serif);
+  letter-spacing: -.015em;
+  max-width: 265px;
+  opacity: .85;
+  margin-bottom: 25px;
+}
+.hero-receipt .receipt-end.brand-tagline {
+  font-size: 16px;
+  line-height: 1.25;
+}
+.ticker.brand-ticker {
+  justify-content: center;
+  gap: clamp(20px, 5vw, 80px);
+  text-align: center;
+}
+.brand-ticker .brand-tagline {
+  white-space: normal;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: .025em;
+}
+.brand-ticker b { flex-shrink: 0; }
+.closing .closing-tagline {
+  display: block;
+  max-width: 580px;
+  margin-inline: auto;
+  font-size: 11px;
+  line-height: 1.7;
+  letter-spacing: .08em;
+}
+footer .footer-tagline { max-width: 280px; }
+footer .footer-tagline .brand-tagline { font-size: 12px; line-height: 1.65; }
+@media (max-width: 760px) {
+  .hero-copy > p.hero-tagline { font-size: 20px; max-width: 280px; line-height: 1.45; }
+  .brand-ticker .brand-tagline { font-size: 12px; letter-spacing: .01em; }
+  .closing .closing-tagline { max-width: 300px; font-size: 10px; letter-spacing: .04em; }
+}
