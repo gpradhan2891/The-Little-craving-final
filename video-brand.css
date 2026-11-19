@@ -109,3 +109,7 @@ header nav a:hover,header nav a:focus-visible{background:#fff2f7;transform:trans
 .review-stars {color:#825a13;letter-spacing:.08em}
 .review-compose select {display:block;margin-top:6px;padding:8px 12px;border-radius:12px;background:#fffbf5;color:inherit}
 #ask-muffin video {object-position:center 45%}
+
+#muffin-form {margin:16px 0}
+#muffin-answer {white-space:pre-line}
+#muffin-handoff {margin-bottom:12px}

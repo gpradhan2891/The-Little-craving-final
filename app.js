@@ -119,21 +119,49 @@ $('#review-draft').onsubmit = async event => {
     form.querySelector('[role=status]').textContent = 'Select and copy your draft, then paste it on Google.';
   }
 };
-const topics = {
-  'Cake weight': 'Have a weight in mind? Enter it in kilograms when you plan your cake. Smriti can confirm it against your guest count.',
-  'Size and servings': 'How many people are celebrating? Add the guest count and whether you prefer small slices or dessert portions.',
-  'Design': 'Choose a cake from the collection and save it to your box. Include your colours, theme and topper ideas.',
-  'Ingredients': 'Tell Smriti the flavours you love and any ingredients you want to include or avoid.',
-  'Dietary restrictions': 'List allergies and dietary requirements. Ask Smriti to confirm ingredients and cross-contact before ordering.',
-  'Healthier options': 'Prefer less sweetness or a particular ingredient swap? Add your preference so Smriti can confirm what works for your design.'
-};
-for (const [topic, answer] of Object.entries(topics)) {
+const muffinTopics = [
+  ['About us', /who.*(make|bake|own|run|found)|who is (smriti|muffin)|about (you|us|the little craving)|tagline|mascot|premix|pre.mix|freshly baked/i, 'Smriti founded The Little Craving and personally handcrafts each cake fresh to order, from scratch. I’m Muffin the Pug! We’re spreading sweetness everywhere one bite at a time. Little things. Big love.'],
+  ['Location', /where.*(located|based|shop|bakery|cakery|you)|location|address|mira road east/i, 'Our boutique home cakery is based in Mira Road East, Thane (Mumbai). We serve the local area and select parts of Mumbai.'],
+  ['Cakes and cupcakes', /what.*(kind|type).*cake|menu|cupcakes?|favou?rs|photo cakes?|gift box|floral cascade|pink lily|rainbow cake/i, 'We make bespoke birthday, anniversary, engagement and milestone cakes. Explore photo cakes with framed or suspended prints, Floral Cascade and Pink Lily, rainbow and themed cakes, silver anniversary cakes, dark chocolate cakes, and clear cake-and-flower gift boxes. Matching cupcakes and celebration favors are available too.'],
+  ['Custom designs', /customi[sz]|theme|recreate|design|collage|topper/i, 'Yes! Smriti can build a design around your story, from favorite colors and milestone numbers to flowers or a framed or suspended photo collage. Share your reference and celebration date on WhatsApp.'],
+  ['Eggless options', /egg[ -]?less|without eggs?|no eggs?/i, '100% eggless cakes and cupcakes are available on request. Mention eggless when you enquire.'],
+  ['Sweetness and ingredients', /sugar|sweete?n|health|ingredient swap/i, 'You can request reduced sweetness or ingredient swaps. Smriti can confirm what works for your chosen cake.'],
+  ['Dietary restrictions', /allerg|gluten|vegan|dietary|nut.free|dairy/i, 'Tell Smriti about allergies or dietary requirements so she can confirm ingredients and cross-contact before you order.'],
+  ['Flavors', /flavou?rs?|belgian|vanilla|red velvet|berry|compote/i, 'Options include artisanal Belgian chocolate, vanilla bean, red velvet, fresh fruit and berry compotes, and seasonal specials. Tell Smriti which flavors you like.'],
+  ['Weight and servings', /how much cake|how (many|big)|serv(e|ing)|guest|portions?|slices?|weight|\bkg\b|cake size/i, 'General guide: 0.5 kg serves 3–5 guests; 1 kg serves 6–10; 1.5 kg serves 10–14; 2 kg or more serves 15–20+ and suits multi-tier designs. Share your guest count and preferred slice size for a recommendation.'],
+  ['Order and quotes', /how.*(order|quote|book)|place an order|my little box/i, 'Explore the menu, save your favorites to My Little Box, then choose Plan my cake or Send via WhatsApp. Share your date, guest count and design ideas with Smriti at +91 90823 55387.'],
+  ['Advance notice', /advance|lead time|how (early|soon|long)|last.minute|notice|express|tomorrow|same.day/i, 'Standard custom cakes usually need 2–3 days. Allow up to 4 days for standard orders depending on availability. Multi-tier, engagement and intricate designs need 4–7 days. Ask Smriti about last-minute slots.'],
+  ['Pricing', /pric|cost|budget|charge|rate card|how much (is|does)|quote/i, 'Smriti provides a personalized quote based on weight, flavor and design details such as photo prints, flowers or clear gift packaging. Send your date, guest count and design ideas on WhatsApp.'],
+  ['Delivery and pickup', /deliver|pickup|pick up|collection point|doorstep/i, 'Pickup is available in Mira Road East. We offer doorstep delivery across Mira Road, Thane and nearby Mumbai suburbs. Share your area and date to confirm.'],
+  ['Contact', /contact|phone|number|instagram|website|whatsapp|reach/i, 'WhatsApp or call +91 90823 55387. Find us on Instagram at @the_little_craving and at thelittlecraving.netlify.app.']
+];
+const muffinHandoff = $('#muffin-handoff');
+function replyAsMuffin(answer, question) {
+  $('#muffin-answer').textContent = answer || 'Smriti can help with that. Open WhatsApp to review and send your question.';
+  const message = question
+    ? 'Hi Smriti, I have a question from Ask Muffin: ' + question
+    : 'Hi Smriti, I’d like to plan a cake. My celebration date, guest count and design ideas are:';
+  muffinHandoff.href = 'https://wa.me/919082355387?text=' + encodeURIComponent(message);
+  muffinHandoff.hidden = false;
+}
+for (const [topic, , answer] of muffinTopics) {
   const button = document.createElement('button');
   button.className = 'pill';
   button.textContent = topic;
-  button.onclick = () => { $('#muffin-answer').textContent = answer; };
+  button.onclick = () => replyAsMuffin(answer);
   $('#muffin-topics').append(button);
 }
+$('#muffin-form').onsubmit = event => {
+  event.preventDefault();
+  const question = new FormData(event.target).get('question').trim();
+  if (!question) {
+    $('#muffin-answer').textContent = 'Type a question for Muffin.';
+    muffinHandoff.hidden = true;
+    return;
+  }
+  const matches = muffinTopics.filter(([, pattern]) => pattern.test(question));
+  replyAsMuffin(matches.map(([, , answer]) => answer).join('\n\n'), question);
+};
 $('#ask-muffin').onclick = () => open('#muffin-dialog');
 
 const photos=[['photo-cake.jpg','A memory, made sweet.'],['engagement.jpg','The sweetest yes.'],['pink.jpg','A little floral feeling.'],['rainbow.jpg','Birthday kind of happy.'],['anniversary.jpg','Twenty-five, together.'],['floral.jpg','Flowers with feeling.'],['chocolate.jpg','A darker kind of lovely.'],['gift.jpg','A little box of love.']];
