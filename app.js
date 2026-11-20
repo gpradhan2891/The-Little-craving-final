@@ -111,6 +111,27 @@ function mountCakeCarousel({ stage, entries, previous, next, status, choices = [
   choices.forEach((button, i) => button.onclick = () => select(i));
   previous.onclick = () => select(index - 1);
   next.onclick = () => select(index + 1);
+  let wheelDistance = 0;
+  let lastWheel = 0;
+  let lastMove = -Infinity;
+  stage.addEventListener('wheel', event => {
+    if (!event.cancelable || event.ctrlKey || event.target.closest('video')) return;
+    const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY);
+    const delta = horizontal ? event.deltaX : event.deltaY;
+    const direction = Math.sign(delta);
+    if (!direction) return;
+    const target = index + direction;
+    if (target < 0 || target >= entries.length) return;
+
+    event.preventDefault();
+    if (event.timeStamp - lastWheel > 160 || Math.sign(wheelDistance) !== direction) wheelDistance = 0;
+    lastWheel = event.timeStamp;
+    wheelDistance += delta * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? stage.clientHeight : 1);
+    if (Math.abs(wheelDistance) < 35 || event.timeStamp - lastMove < 420) return;
+    wheelDistance = 0;
+    lastMove = event.timeStamp;
+    select(target);
+  }, { passive: false });
   select(0);
 }
 
