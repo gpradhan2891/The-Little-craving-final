@@ -49,8 +49,7 @@ const products = [
     "video": "assets/cake-menu/photo-cake-final.mp4"
   }
 ];
-let index=0, box=[], toastTimer;
-try{box=JSON.parse(localStorage.getItem('tlc-love-box')||'[]').filter(id=>products.some(p=>p.id===id))}catch{}
+let index=0, toastTimer;
 function notify(message){clearTimeout(toastTimer);$('#toast').textContent=message;$('#toast').classList.add('show');toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),3000)}
 const film = $('#menu-film');
 const picture = $('#menu-photo');
@@ -74,7 +73,6 @@ function select(i) {
   swap.hidden = !product.video;
   $('#cake-title').textContent = product.title;
   $$('.cake-choices button').forEach(button => button.setAttribute('aria-pressed', button.dataset.kind === product.id));
-  renderBox();
 }
 $$('.cake-choices button').forEach((button,i) => button.onclick = () => select(i));
 swap.onclick = () => {
@@ -89,9 +87,6 @@ swap.onclick = () => {
 let previousFocus;
 function open(id){$$('dialog[open]').forEach(d=>d.close());previousFocus=document.activeElement;$(id).showModal();document.body.style.overflow='hidden'}
 $$('dialog').forEach(d=>{d.querySelector('.close').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}});d.addEventListener('close',()=>{if(!$('dialog[open]')){document.body.style.overflow='';previousFocus?.focus({preventScroll:true})}})});
-function renderBox(){ $('#bag-count').textContent=box.length;$('#box-items').innerHTML=box.length?box.map(id=>{const p=products.find(p=>p.id===id);return `<div class="box-item"><img src="assets/${p.photo}" alt=""><span>${p.title}</span><button data-remove="${id}" aria-label="Remove ${p.title}">Remove</button></div>`}).join(''):'<p>Your box is waiting for something lovely.<br>Explore the cake menu and save an idea.</p>';$$('[data-remove]').forEach(b=>b.onclick=()=>{box=box.filter(id=>id!==b.dataset.remove);saveBox()});$('#add-box').textContent=box.includes(products[index].id)?'Saved in your box ✓':'Save this cake +'}
-function saveBox(){try{localStorage.setItem('tlc-love-box',JSON.stringify(box))}catch{}renderBox()}
-$('#add-box').onclick=()=>{const p=products[index];if(!box.includes(p.id)){box.push(p.id);saveBox();notify('A little idea added to your box.')}else notify('This lovely idea is already in your box.')};$('#open-bag').onclick=()=>{renderBox();open('#box-dialog')};
 $$('[data-enquire]').forEach(b=>b.onclick=()=>open('#enquiry-dialog'));
 $('#brief-form').onsubmit = event => {
   event.preventDefault();
@@ -99,7 +94,6 @@ $('#brief-form').onsubmit = event => {
   const lines = ['Hello Smriti, I have a cake enquiry.',
     'Occasion: ' + data.get('occasion'), 'Celebration date: ' + data.get('date'),
     'Weight: ' + data.get('weight') + ' kg', 'My little detail: ' + data.get('idea')];
-  if (box.length) lines.push('Saved cakes: ' + box.map(id => products.find(p => p.id === id).title).join(', '));
   const message = lines.join('\n');
   const url = 'https://wa.me/919082355387?text=' + encodeURIComponent(message);
   window.open(url, '_blank', 'noopener');
@@ -129,7 +123,7 @@ const muffinTopics = [
   ['Dietary restrictions', /allerg|gluten|vegan|dietary|nut.free|dairy/i, 'Tell Smriti about allergies or dietary requirements so she can confirm ingredients and cross-contact before you order.'],
   ['Flavors', /flavou?rs?|belgian|vanilla|red velvet|berry|compote/i, 'Options include artisanal Belgian chocolate, vanilla bean, red velvet, fresh fruit and berry compotes, and seasonal specials. Tell Smriti which flavors you like.'],
   ['Weight and servings', /how much cake|how (many|big)|serv(e|ing)|guest|portions?|slices?|weight|\bkg\b|cake size/i, 'General guide: 0.5 kg serves 3–5 guests; 1 kg serves 6–10; 1.5 kg serves 10–14; 2 kg or more serves 15–20+ and suits multi-tier designs. Share your guest count and preferred slice size for a recommendation.'],
-  ['Order and quotes', /how.*(order|quote|book)|place an order|my little box/i, 'Explore the menu, save your favorites to My Little Box, then choose Plan my cake or Send via WhatsApp. Share your date, guest count and design ideas with Smriti at +91 90823 55387.'],
+  ['Order and quotes', /how.*(order|quote|book)|place an order/i, 'Explore the menu, then choose Plan my cake or Send via WhatsApp. Share your date, guest count and design ideas with Smriti at +91 90823 55387.'],
   ['Advance notice', /advance|lead time|how (early|soon|long)|last.minute|notice|express|tomorrow|same.day/i, 'Standard custom cakes usually need 2–3 days. Allow up to 4 days for standard orders depending on availability. Multi-tier, engagement and intricate designs need 4–7 days. Ask Smriti about last-minute slots.'],
   ['Pricing', /pric|cost|budget|charge|rate card|how much (is|does)|quote/i, 'Smriti provides a personalized quote based on weight, flavor and design details such as photo prints, flowers or clear gift packaging. Send your date, guest count and design ideas on WhatsApp.'],
   ['Delivery and pickup', /deliver|pickup|pick up|collection point|doorstep/i, 'Pickup is available in Mira Road East. We offer doorstep delivery across Mira Road, Thane and nearby Mumbai suburbs. Share your area and date to confirm.'],
