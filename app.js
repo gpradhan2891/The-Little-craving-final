@@ -49,41 +49,76 @@ const products = [
     "video": "assets/cake-menu/photo-cake-final.mp4"
   }
 ];
-let index=0, toastTimer;
+let toastTimer;
 function notify(message){clearTimeout(toastTimer);$('#toast').textContent=message;$('#toast').classList.add('show');toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),3000)}
-const film = $('#menu-film');
-const picture = $('#menu-photo');
-const swap = $('#swap-film');
-function showPhoto() {
-  film.pause();
-  film.hidden = true;
-  picture.hidden = false;
-  swap.textContent = 'Watch video';
+function mountCakeCarousel({ stage, entries, previous, next, status, choices = [] }) {
+  let index = 0;
+  const cards = entries.map((cake, i) => {
+    const card = document.createElement('article');
+    const photo = 'assets/' + cake.photo;
+    card.className = 'collection-card';
+    card.innerHTML = `
+      <div class="collection-media">
+        <img src="${photo}" alt="${cake.title}">
+        <video hidden controls playsinline loop preload="none" poster="${photo}" aria-label="${cake.title} video"></video>
+      </div>
+      <h3>${cake.title}</h3>
+      <div class="collection-actions">
+        <button type="button" class="pill" data-image="${photo}" data-caption="${cake.title}">Real Photo</button>
+        <button type="button" class="pill dark collection-watch" aria-pressed="false">Watch Video</button>
+      </div>`;
+    const video = card.querySelector('video');
+    const image = card.querySelector('img');
+    const watch = card.querySelector('.collection-watch');
+    function stop() {
+      video.pause();
+      video.hidden = true;
+      image.hidden = false;
+      watch.setAttribute('aria-pressed', 'false');
+    }
+    watch.onclick = () => {
+      if (i !== index) select(i);
+      if (!video.hidden) return stop();
+      if (!video.getAttribute('src')) video.src = cake.video;
+      video.muted = cake.id !== 'pink';
+      image.hidden = true;
+      video.hidden = false;
+      watch.setAttribute('aria-pressed', 'true');
+      video.play().catch(() => {});
+    };
+    card.querySelector('[data-image]').addEventListener('click', stop);
+    card.addEventListener('click', event => {
+      if (!event.target.closest('button,video') && i !== index) select(i);
+    });
+    stage.append(card);
+    return { card, stop };
+  });
+
+  function select(i) {
+    const total = entries.length;
+    cards[index].stop();
+    index = (i + total) % total;
+    cards.forEach(({ card }, position) => {
+      const offset = (position - index + total + total / 2) % total - total / 2;
+      card.dataset.offset = offset;
+      card.inert = Math.abs(offset) > 2;
+    });
+    choices.forEach((button, position) => {
+      button.setAttribute('aria-pressed', position === index);
+    });
+    status.textContent = entries[index].title + ' · ' + (index + 1) + ' of ' + total;
+  }
+  choices.forEach((button, i) => button.onclick = () => select(i));
+  previous.onclick = () => select(index - 1);
+  next.onclick = () => select(index + 1);
+  select(0);
 }
-function select(i) {
-  index = i;
-  const product = products[i];
-  showPhoto();
-  film.removeAttribute('src');
-  film.load();
-  picture.src = 'assets/' + product.photo;
-  picture.alt = product.title;
-  film.poster = picture.src;
-  film.setAttribute('aria-label', product.title + ' video');
-  swap.hidden = !product.video;
-  $('#cake-title').textContent = product.title;
-  $$('.cake-choices button').forEach(button => button.setAttribute('aria-pressed', button.dataset.kind === product.id));
-}
-$$('.cake-choices button').forEach((button,i) => button.onclick = () => select(i));
-swap.onclick = () => {
-  if (!film.hidden) return showPhoto();
-  film.muted = products[index].id !== 'pink';
-  film.src = products[index].video;
-  picture.hidden = true;
-  film.hidden = false;
-  swap.textContent = 'Show photo';
-  film.play().catch(() => {});
-};
+
+mountCakeCarousel({
+  stage: $('#collection-stage'), entries: products,
+  previous: $('#cake-prev'), next: $('#cake-next'), status: $('#cake-position'),
+  choices: $$('.cake-choices button')
+});
 let previousFocus;
 function open(id){$$('dialog[open]').forEach(d=>d.close());previousFocus=document.activeElement;$(id).showModal();document.body.style.overflow='hidden'}
 $$('dialog').forEach(d=>{d.querySelector('.close').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}});d.addEventListener('close',()=>{if(!$('dialog[open]')){document.body.style.overflow='';previousFocus?.focus({preventScroll:true})}})});
@@ -159,12 +194,11 @@ $('#muffin-form').onsubmit = event => {
 $('#ask-muffin').onclick = () => open('#muffin-dialog');
 
 const photos=[['photo-cake.jpg','A memory, made sweet.'],['engagement.jpg','The sweetest yes.'],['pink.jpg','A little floral feeling.'],['rainbow.jpg','Birthday kind of happy.'],['anniversary.jpg','Twenty-five, together.'],['floral.jpg','Flowers with feeling.'],['chocolate.jpg','A darker kind of lovely.'],['gift.jpg','A little box of love.']];
-$('#photo-grid').innerHTML=photos.map(([src,label])=>`<button class="diary-card" data-image="assets/${src}" data-caption="${label}"><img src="assets/${src}" loading="lazy" alt="${label}"><span>${label}</span></button>`).join('');
+$('#photo-grid').innerHTML = photos.map(([src, label]) => `<button class="diary-card" data-image="assets/${src}" data-caption="${label}"><img src="assets/${src}" loading="lazy" alt="${label}"><span>${label}</span></button>`).join('');
 const lightbox=document.createElement('dialog');lightbox.id='photo-dialog';lightbox.innerHTML='<button class="close" aria-label="Close photograph">×</button><img alt="" style="max-height:65svh;object-fit:contain;margin-top:25px;border-radius:12px"><p style="margin-top:20px;font:24px var(--serif)"></p>';document.body.append(lightbox);lightbox.querySelector('.close').onclick=()=>lightbox.close();lightbox.onclose=()=>{document.body.style.overflow='';previousFocus?.focus({preventScroll:true})};
 document.addEventListener('click',e=>{const b=e.target.closest('[data-image]');if(b){lightbox.querySelector('img').src=b.dataset.image;lightbox.querySelector('img').alt=b.dataset.caption||'The Little Craving archive photograph';lightbox.querySelector('p').textContent=b.dataset.caption||'From the TLC archive';open('#photo-dialog')}});
 let archiveData=[],archiveLimit=24;
 async function showArchive(){const panel=$('#archive');panel.hidden=!panel.hidden;$('#archive-toggle').textContent=panel.hidden?'Explore our Instagram grid ↗':'Close the Instagram grid ↑';if(!panel.hidden&&!archiveData.length){try{archiveData=await(await fetch('asset-library.json')).json();renderArchive()}catch{notify('The Instagram grid could not load. Please try again.')}}}
 function renderArchive(){const filtered=archiveData;$('#archive-grid').innerHTML=filtered.slice(0,archiveLimit).map(p=>`<button data-image="${p.url}" data-caption="From The Little Craving’s Instagram grid"><img src="${p.thumbnail}" alt="The Little Craving portfolio photograph" loading="lazy" width="${p.width}" height="${p.height}"></button>`).join('');$('#archive-count').textContent=`${Math.min(archiveLimit,filtered.length)} of ${filtered.length} photographs`;$('#load-more').hidden=archiveLimit>=filtered.length;}
 $('#archive-toggle').onclick=showArchive;$('#load-more').onclick=()=>{archiveLimit+=24;renderArchive()};
-select(0);
 document.body.dataset.sceneReady='true';

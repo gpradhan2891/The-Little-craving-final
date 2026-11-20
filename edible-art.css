@@ -1,0 +1,50 @@
+
+:root{color:#542638;background:#fff7f2;font-family:"DM Sans",sans-serif}
+*{box-sizing:border-box}body,figure{margin:0}a{color:inherit}
+header{display:flex;justify-content:space-between;gap:16px;padding:18px 6%;background:#fff9f6}
+header a:first-child{font:22px "DM Serif Display",Georgia,serif}
+.studio{position:relative;isolation:isolate;overflow:hidden;min-height:680px;display:grid;grid-template-columns:1.15fr 1fr;align-items:center;gap:5%;padding:70px 8%;background:radial-gradient(ellipse at 72% 25%,#fffdf8 0%,#f9e4e9 54%,#e4bccb 100%)}
+.scenery{position:absolute;inset:0;z-index:-1;pointer-events:none;perspective:950px}
+.ribbon{position:absolute;width:125%;height:240px;left:-14%;border-radius:50%;border:36px solid #fff9;border-left-color:#fff3;border-right-color:#fff5;box-shadow:inset 0 3px 9px #fff,0 12px 34px #9e597528;backdrop-filter:blur(12px);animation:sweep 16s ease-in-out infinite alternate}
+.ribbon-one{top:16%;--tilt:-22deg}.ribbon-two{top:57%;--tilt:18deg;animation-delay:-8s}
+@keyframes sweep{from{transform:rotateZ(var(--tilt)) rotateX(52deg) translateX(-5%)}to{transform:rotateZ(var(--tilt)) rotateX(25deg) translateX(5%)}}
+.gold-leaf{position:absolute;inset:0}
+.gold-leaf i{position:absolute;left:var(--x);top:var(--y);width:var(--size);height:calc(var(--size)*.65);background:linear-gradient(115deg,#77501b,#f9da84,#a67729);clip-path:polygon(0 40%,34% 0,90% 17%,100% 72%,49% 100%,16% 85%);animation:float var(--time) var(--delay) ease-in-out infinite alternate}
+@keyframes float{to{transform:translate3d(44px,-100px,20px) rotate3d(1,1,0,220deg)}}
+.intro p{font-weight:700;letter-spacing:.08em}.intro a,#motion-toggle{display:inline-block;padding:10px 16px;border:1px solid #b8899c;border-radius:99px;background:#fffaf6;color:inherit}
+h1,h2{font-family:"DM Serif Display",Georgia,serif;font-weight:400}h1{font-size:clamp(44px,6.5vw,104px);line-height:.98;margin:18px 0 32px}h1 em{display:block;color:#873a57}
+.pedestal{justify-self:center;width:min(100%,390px);padding:16px;background:#fff8;border:1px solid #fff;border-radius:140px 140px 26px 26px;backdrop-filter:blur(18px);box-shadow:0 28px 65px #783d5330;transform:perspective(1000px) rotateY(-8deg)}
+figure img{display:block;width:100%;object-fit:cover}.pedestal img{aspect-ratio:4/5;border-radius:124px 124px 16px 16px}figcaption{padding:12px;text-align:center;font-weight:600}
+#motion-toggle{position:absolute;bottom:14px;right:16px;cursor:pointer}.paused .ribbon,.paused .gold-leaf i{animation-play-state:paused}
+.artwork{padding:60px 8%}.artwork h2{font-size:clamp(32px,5vw,56px)}.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.gallery figure{overflow:hidden;border-radius:22px;background:#fae8ee}.gallery img{aspect-ratio:4/5;object-fit:contain}
+@media(max-width:700px){.studio{grid-template-columns:1fr;padding:42px 7% 66px;gap:28px}.pedestal{max-width:290px;transform:none}.gallery{grid-template-columns:repeat(auto-fit,minmax(145px,1fr))}}
+@media(prefers-reduced-motion:reduce){.ribbon,.gold-leaf i{animation:none}}
+.ribbon{transform:rotateZ(var(--tilt)) rotateX(42deg)}
+
+/* Center the display and layer the glass behind and in front of the cake. */
+.studio {
+  grid-template-columns:minmax(0,1fr); justify-items:center; gap:18px;
+  padding:40px 6% 62px; text-align:center;
+  background:radial-gradient(ellipse at 50% 42%,#fffaf6 0%,#f4e5df 45%,#d9c1ba 100%);
+}
+.intro h1 {font-size:clamp(36px,5vw,72px);margin:12px 0}
+.intro h1 em {display:inline}
+.intro .studio-subtitle {letter-spacing:0;font-weight:400}
+.studio-display {
+  position:relative; display:grid; justify-items:center;
+  width:min(100%,680px); perspective:1000px;
+}
+.studio-display .pedestal {
+  width:min(72%,340px); max-width:none; transform:none;
+  box-shadow:0 24px 55px #6741373a;
+}
+.ribbon-front {
+  width:95%; left:2%; top:58%; height:125px;
+  --tilt:-12deg;
+  border-width:24px; border-top-color:transparent;
+  border-bottom-color:#fff8; backdrop-filter:none;
+  box-shadow:0 12px 20px #b2827533; pointer-events:none;
+  animation-delay:-5s;
+}
+.studio-explore {z-index:1;padding:9px 16px;border-radius:99px;background:#fff8}
+@media(max-width:700px){.studio{min-height:0}.ribbon-front{border-width:14px;height:86px}}
